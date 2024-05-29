@@ -37,26 +37,30 @@ class App extends React.Component<MyProps, MyState> {
       )
     )
   }
+
+  onSearchChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const searchField = event.target.value.toLocaleLowerCase();
+
+    this.setState(() => {
+      return { searchField: searchField }
+    });
+  };
+
   render() {
     console.log('render');
+
+    const { monsters, searchField } = this.state;
+    const { onSearchChange } = this;
+
     // move filtered list outside the callback so that we filter on the full list not on the filtered list
     // searchField changes -> filterList changes -> display filter list
-    const filteredMonsters = this.state.monsters.filter((user) =>  user.name.includes(this.state.searchField));
+    const filteredMonsters = monsters.filter((user) =>  user.name.includes(searchField));
     return (
       <>
         <div className='App'>
           <input className='search-box' type="search" placeholder='search monster'
-            onChange={(event) => {
-              console.log({startingArray: this.state.monsters});
-              const searchField = event.target.value.toLocaleLowerCase();
-
-              this.setState(() => {
-                return { searchField: searchField }
-              }, () => {
-                console.log({endingArray: this.state.monsters});
-
-              });
-           }}/>
+            onChange={onSearchChange}
+          />
           {filteredMonsters.map((monster) => {
             return (
               <div key={monster.id}>
