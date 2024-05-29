@@ -7,7 +7,7 @@ import { User } from './types';
 
 
 type MyProps = { myProps: string};
-type MyState = { monsters: User[] };
+type MyState = { monsters: User[], searchField: string };
 
 class App extends React.Component<MyProps, MyState> {
   constructor() {
@@ -16,6 +16,7 @@ class App extends React.Component<MyProps, MyState> {
     // initial state
     this.state = {
       monsters: [],
+      searchField: ''
 
     }
   }
@@ -26,7 +27,9 @@ class App extends React.Component<MyProps, MyState> {
     .then((users) =>
       this.setState(
         () => {
-          return { monsters: users };
+          return {
+            monsters: users,
+          };
         },
         () => {
           console.log(this.state);
@@ -36,23 +39,25 @@ class App extends React.Component<MyProps, MyState> {
   }
   render() {
     console.log('render');
+    // move filtered list outside the callback so that we filter on the full list not on the filtered list
+    // searchField changes -> filterList changes -> display filter list
+    const filteredMonsters = this.state.monsters.filter((user) =>  user.name.includes(this.state.searchField));
     return (
       <>
         <div className='App'>
           <input className='search-box' type="search" placeholder='search monster'
             onChange={(event) => {
               console.log({startingArray: this.state.monsters});
-              const searchString = event.target.value.toLocaleLowerCase();
-              const filteredMonsters = this.state.monsters.filter((user) =>  user.name.includes(searchString));
-              console.log(filteredMonsters);
+              const searchField = event.target.value.toLocaleLowerCase();
+
               this.setState(() => {
-                return { monsters: filteredMonsters }
+                return { searchField: searchField }
               }, () => {
                 console.log({endingArray: this.state.monsters});
 
               });
            }}/>
-          {this.state.monsters.map((monster) => {
+          {filteredMonsters.map((monster) => {
             return (
               <div key={monster.id}>
                 <h1>{monster.name}</h1>
