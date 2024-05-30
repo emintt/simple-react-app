@@ -3,6 +3,7 @@ import './App.css'
 import { Component } from 'react';
 import React from 'react';
 import { User } from './types';
+import CardList from './components/card-list/card-list';
 
 
 
@@ -31,9 +32,9 @@ class App extends React.Component<MyProps, MyState> {
             monsters: users,
           };
         },
-        () => {
-          console.log(this.state);
-        }
+        // () => {
+        //   console.log(this.state);
+        // }
       )
     )
   }
@@ -47,8 +48,7 @@ class App extends React.Component<MyProps, MyState> {
   };
 
   render() {
-    console.log('render');
-
+    console.log('render from Appjs');
     const { monsters, searchField } = this.state;
     const { onSearchChange } = this;
 
@@ -61,13 +61,14 @@ class App extends React.Component<MyProps, MyState> {
           <input className='search-box' type="search" placeholder='search monster'
             onChange={onSearchChange}
           />
-          {filteredMonsters.map((monster) => {
+          {/* {filteredMonsters.map((monster) => {
             return (
               <div key={monster.id}>
                 <h1>{monster.name}</h1>
               </div>
             );
-          })}
+          })} */}
+          <CardList monsters={filteredMonsters}/>
         </div>
 
       </>
