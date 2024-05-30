@@ -1,9 +1,9 @@
 
 import './App.css'
-import { Component } from 'react';
 import React from 'react';
 import { User } from './types';
 import CardList from './components/card-list/card-list';
+import SearchBox from './components/search-box/search-box';
 
 
 
@@ -32,9 +32,7 @@ class App extends React.Component<MyProps, MyState> {
             monsters: users,
           };
         },
-        // () => {
-        //   console.log(this.state);
-        // }
+
       )
     )
   }
@@ -52,22 +50,12 @@ class App extends React.Component<MyProps, MyState> {
     const { monsters, searchField } = this.state;
     const { onSearchChange } = this;
 
-    // move filtered list outside the callback so that we filter on the full list not on the filtered list
     // searchField changes -> filterList changes -> display filter list
     const filteredMonsters = monsters.filter((user) =>  user.name.includes(searchField));
     return (
       <>
         <div className='App'>
-          <input className='search-box' type="search" placeholder='search monster'
-            onChange={onSearchChange}
-          />
-          {/* {filteredMonsters.map((monster) => {
-            return (
-              <div key={monster.id}>
-                <h1>{monster.name}</h1>
-              </div>
-            );
-          })} */}
+          <SearchBox onChangeHandler={onSearchChange} placeholder='search monster' className='monster-search-box'/>
           <CardList monsters={filteredMonsters}/>
         </div>
 

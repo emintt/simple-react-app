@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { User } from "../../types";
 
 type MyProps = { monsters: User[]};
@@ -14,7 +14,9 @@ class CardList extends React.Component<MyProps, MyState> {
     return (
       <div>
         {monsters.map((monster) => (
-          <h1 key={monster.id}>{monster.name}</h1>
+          <div>
+            <h1 key={monster.id}>{monster.name}</h1>
+          </div>
         ))}
       </div>
     )
