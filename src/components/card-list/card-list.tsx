@@ -1,23 +1,24 @@
 import React from "react";
-import { User } from "../../types";
+import { Post } from "../../types";
+import './card-list.styles.css';
+import Card from "../card/card";
 
-type MyProps = { monsters: User[]};
+type MyProps = { posts: Post[]};
 type MyState = { null: unknown};
 
 class CardList extends React.Component<MyProps, MyState> {
   render() {
-    console.log(this.props.monsters);
+    console.log(this.props.posts);
     console.log('render from cardlist');
-    const { monsters } = this.props;
+    const { posts } = this.props;
 
 
     return (
-      <div>
-        {monsters.map((monster) => (
-          <div>
-            <h1 key={monster.id}>{monster.name}</h1>
-          </div>
-        ))}
+      <div className="card-list">
+        {posts.map((post) => {
+          return (
+            <Card post={post} />
+        )})}
       </div>
     )
   }

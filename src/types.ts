@@ -28,4 +28,11 @@ type Company =  {
   bs: string;
 }
 
-export type { User, Address, Geo, Company };
+type Post = {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+}
+
+export type { User, Address, Geo, Company, Post };
